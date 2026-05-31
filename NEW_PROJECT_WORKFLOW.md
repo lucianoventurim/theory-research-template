@@ -76,7 +76,7 @@ Git: Clone
 Paste the repository URL, for example:
 
 ```text
-https://github.com/YOUR_USERNAME/NEW-PROJECT.git
+https://github.com/lucianoventurim/NEW-PROJECT.git
 ```
 
 Choose the local folder where the project should live, for example:
