@@ -1,0 +1,171 @@
+\title{Coordinated learning}
+\author{Luciano Venturim}
+% \author{Luciano Venturim\footnote{Northwestern University Kellogg School of Management, Global Hub, 2211 Campus Drive, Evanston IL 60208; email: lucianofabio.venturim@kellogg.northwestern.edu.}}
+\date{\today}
+\documentclass[12pt,letterpaper]{article}
+
+% =========================
+% Encoding & fonts
+% =========================
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}  % UTF-8 source files (Overleaf default)
+% \usepackage{newtxtext}       % Times-like text
+% \usepackage{newtxmath}       % Times-like math
+\usepackage{microtype}       % better kerning & protrusion
+
+% =========================
+% Math & theorem tools
+% =========================
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{bm}              % bold math
+\usepackage{mathrsfs}        % \mathscr
+\usepackage{bbm}             % \mathbbm{1}
+\usepackage{dsfont}          % \mathds
+
+% =========================
+% Layout & spacing
+% =========================
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\usepackage{setspace}        % \doublespacing, \onehalfspacing, etc.
+\usepackage[shortlabels]{enumitem}        % compact lists, label control
+\usepackage{float}           % [H] placement
+\sloppy                      % relax line-breaking to avoid overfull lines
+
+% =========================
+% Graphics, tables, colors
+% =========================
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{patterns}
+\usepackage{rotating}
+\usepackage{xcolor}          % (supersedes 'color')
+\usepackage{booktabs}        % \toprule, \midrule, \bottomrule
+\usepackage{array}
+\usepackage{multirow}
+
+% =========================
+% Text utilities & domain packages
+% =========================
+\usepackage{csquotes}
+\usepackage{comment}
+\usepackage{sgame}           % strategic-form games (if used)
+\usepackage{econometrics}    % keep only if your project includes this .sty
+
+% =========================
+% Bibliography & hyperlinks
+% =========================
+\usepackage[round]{natbib}
+\bibliographystyle{abbrvnat}
+
+\usepackage[pagebackref]{hyperref}  % load hyperref close to last
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=black
+}
+
+% =========================
+% New commands
+% =========================
+\newcommand{\argmax}[1]{\underset{#1}{\text{argmax }}}
+\newcommand{\argmin}[1]{\underset{#1}{\text{argmin }}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Ex}{\mathbb{E}}
+
+\newtheorem{proposition}{\hskip\parindent\bf{Proposition}}
+\newtheorem{theorem}{\hskip\parindent\bf{Theorem}}
+\newtheorem{lemma}{\hskip\parindent\bf{Lemma}}
+\newtheorem{corollary}{\hskip\parindent\bf{Corollary}}
+\newtheorem{condition}{\hskip\parindent\bf{Condition}}
+\newtheorem{claim}{\hskip\parindent\bf{Claim}}
+\newtheorem{definition}{\hskip\parindent\bf{Definition}}
+\newtheorem{assumption}{\hskip\parindent\bf{Assumption}}
+\newtheorem{example}{\hskip\parindent\bf{Example}}
+
+\begin{document}
+
+\doublespacing
+
+\maketitle
+
+% \begin{abstract}
+% ABSTRACT. \\
+% JEL Codes:. Keywords.
+% \end{abstract}
+
+% \newpage
+\section{Model}
+
+Consider the following model. A continuum of unit mass of individuals $i\in[0,1]$ play a game repeatedly. At every period, two individuals are matched, with matches being formed at random. Within that period, the pair of individuals $i,j$ play a simultaneous stage game $G(\theta)$. The payoffs obtained in a stage game vary with the unknown state of the world $\theta\in\Theta$. After period $t$'s actions, each individual survives with probability $\delta\in(0,1)$. The individuals who died are replaced by new individuals with a clean history. Individuals' payoffs are normalized by $(1-\delta)$. We also allow the individuals to report their history of play and payoffs in a credible and \textbf{costless} manner. The communication happens after the match is realized, but before the actions are taken.
+
+\paragraph{Example.} For now, let's consider the case in which $\theta$ is persistent --- it is drawn at $t=0$ according to prior distribution $p\in \Delta(\Theta)$ and it stays the same from then on ---, and there are no replacements.\footnote{In this setting, we can either interpret $\delta$ as a discount factor, or continue assuming that agents are replaced but that new individuals inherit the histories.} Consider the following coordination example. There are two states indexed by $r\in\{r_1,r_2\}$. Players can play $a_i\in\{L,R\}$. The payoffs are given by 
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        $i\,\backslash \, j$  & L & R\\
+        \hline
+        L & $2,2$ & $3,-1$\\
+        \hline
+        R & $-1,3$ & $r,r$\\
+        \hline
+    \end{tabular}
+\end{table}
+
+Note that only action profile $a=(R,R)$ differentiates the state. Suppose $r_1$, $r_2$, and $p_1=P(r=r_1)$ are such that $$r_2>3>2>r_1$$ and $$3>p_1r_1+(1-p_1)r_2>2.$$ Under this assumption, the following are true:
+
+\begin{enumerate}[i.]
+    \item When $r=r_1$, $a_i=L$ is a strictly dominating action. Hence, $(L,L)$ is the unique strict, Pareto Efficient Nash Equilibrium (NE) of the stage game.
+
+    \item When $r=r_2$, both $(L,L)$ and $(R,R)$ are strict NE, with $(R,R)$ Pareto dominating $(L,L)$.
+
+    \item For all $\delta\in(0,1)$, the third condition implies that it is efficient for everyone to play $(R,R)$ at $t=0$ and coordinate in the efficient equilibrium thereafter. This can be clearly seen by noting that \begin{equation*}
+        p_1[(1-\delta)r_1+2\delta]+(1-p_1)r_2>p_1r_1+(1-p_1)r_2>2.
+    \end{equation*}
+
+    \item When $\delta$ is low, deviating at $t=0$ is profitable even if leads to the deviating player not learning the state.
+\end{enumerate}
+
+In this efficient outcome, everyone tries the ``risky" action at $t=0$, learn the state and play the efficient action from them one. Can it be an equilibrium? It clearly depends on what is observable when a new match is formed. If no record can be tracked, one can show that this outcome can not be an equilibrium for some parameters for all discount factors.
+
+First, note that a deviation from the strategy at any $t\geq 1$ is clearly not profitable. Consider then a deviation from $a_{i,0}=R$ to $\hat{a}_{i,0}=L$. Since $u_i(\hat{a}_{i,0},R,\theta_1)=u_i(\hat{a}_{i,0},R,\theta_2)$, player $i$ does not learn the state and hence his posterior equals his prior $p$. At $t=1$, in his new match, the other player will play $L$ with probability $p_1$ and $R$ with probability $1-p_1$. In any case, player $i$ can learn the state at $t=1$ from the action of his match.
+
+Now, consider the case $2p_1+3(1-p_1)>-p_1+r_2(1-p_1)$, so that player $i$'s best response at $t=1$ is $L$. The proposed strategy is an equilibrium if and only if \begin{equation*}
+    p_1[(1-\delta)r_1+2\delta]+(1-p_1)r_2 \geq 3(1-\delta)+\delta[2p_1+(1-p_1)(3(1-\delta)+\delta r_2)].
+\end{equation*}
+
+Note that both the LHS and RHS converge to $2p_1+(1-p_1)r_2$ as $\delta$ converges to $1$. On the other hand, the LHS converges to $p_1r_1+(1-p_1)r_2$ when $\delta \to 0$, while the RHS converges to $3$. Finally, since the LHS is linear in $\delta$ and the RHS is quadratic, there exists at most a discount factor between $0$ and $1$ for which this is an equilibrium. In fact, one can check that if $r_1=1$, $r_2=4$, and $p_1=1/2$, this inequality is only satisfied at $\delta=1$. This is also true for $r_2\in[3,4]$. In those cases, the proposed strategy is not an equilibrium for any $\delta$ below unity.
+
+\begin{lemma}
+    In the game above, when $r_1=1$, $r_2\in[3,4]$, and $p_1=1/2$, full-learning and coordination is not an equilibrium for any $\delta<1$.
+\end{lemma}
+
+Now, consider the case in which $r_1=1$, $r_2=4$, and $p_1=1/2$, but suppose the players have access to a public randomization device at $t=0$, which allows coordination at different strategies for different matches. Consider a strategy profile in which $\varepsilon>0$ of the players at $t=0$ (or $\frac{\varepsilon}{2}$ of the matches) are assigned to play $(L,L)$ at $t=0$, while the others are assigned to play $(R,R)$. At $t=1$ onward, players who have played $R$ at $t=0$ coordinate on the efficient equilibrium, while players who have played $L$ play $L$ at all histories in which non of their past partners have played $R$, and $R$ at all histories in which at least one of their partners have played $R$. Note that on the equilibrium path, $a_{-i}=R$ can only be observed if $r=r_2$. Hence, observing $a_{-i}=R$ signals that your partner learned the state at a prior date, and therefore player $i$ updates his posterior to attach probability $1$ to $r=r_2$. On the other hand, player $i$ can observe $a_{-i}=L$ by either matching with an uninformed player or by matching with an informed player who learned that the state is $r=r_1$. After observing $a_{-i,1}=L$, the player attaches probability close to $1$ to the second case when $\varepsilon$ is sufficiently small, in which case playing $L$ is a best response. The posterior probability that player $i$ attaches to state $r=r_1$ increases over time with more observations of $a_{-i}=L$, and changes to $0$ after any observation of $a_{-i}=R$.
+
+% \newpage
+% %\nocite{*}
+% \bibliography{references} % Entries are in the refs.bib file
+
+% \newpage
+% \appendix
+
+% \section{Appendix}
+
+% %Restating Propositions in the text with the same number
+% \begingroup
+% \renewcommand{\theproposition}{\ref{REFERENCE}}
+% \begin{proposition}[Restated]
+%     PROPOSITION
+
+%     \begin{proof}
+%         PROOF.
+%     \end{proof}
+% \end{proposition}
+% \endgroup
+
+\end{document}

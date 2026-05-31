@@ -1,0 +1,245 @@
+% !TEX root = main.tex
+
+\title{Coordinated learning in large populations}
+\author{Luciano Venturim}
+% \author{Luciano Venturim\footnote{Northwestern University Kellogg School of Management, Global Hub, 2211 Campus Drive, Evanston IL 60208; email: lucianofabio.venturim@kellogg.northwestern.edu.}}
+\date{\today}
+\documentclass[12pt,letterpaper]{article}
+
+% =========================
+% Encoding & fonts
+% ========================= 
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}  % UTF-8 source files (Overleaf default)
+% \usepackage{newtxtext}       % Times-like text
+% \usepackage{newtxmath}       % Times-like math
+\usepackage{microtype}       % better kerning & protrusion
+
+% =========================
+% Math & theorem tools
+% =========================
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{bm}              % bold math
+\usepackage{mathrsfs}        % \mathscr
+\usepackage{bbm}             % \mathbbm{1}
+\usepackage{dsfont}          % \mathds
+
+% =========================
+% Layout & spacing
+% =========================
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\usepackage{setspace}        % \doublespacing, \onehalfspacing, etc.
+\usepackage[shortlabels]{enumitem}        % compact lists, label control
+\usepackage{float}           % [H] placement
+\sloppy                      % relax line-breaking to avoid overfull lines
+
+% =========================
+% Graphics, tables, colors
+% =========================
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{patterns}
+\usepackage{rotating}
+\usepackage{xcolor}          % (supersedes 'color')
+\usepackage{booktabs}        % \toprule, \midrule, \bottomrule
+\usepackage{array}
+\usepackage{multirow}
+
+% =========================
+% Text utilities & domain packages
+% =========================
+\usepackage{csquotes}
+\usepackage{comment}
+\usepackage{sgame}           % strategic-form games (if used)
+\usepackage{econometrics}    % keep only if your project includes this .sty
+
+% =========================
+% Bibliography & hyperlinks
+% =========================
+\usepackage[round]{natbib}
+\bibliographystyle{abbrvnat}
+
+\usepackage[pagebackref]{hyperref}  % load hyperref close to last
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=black
+}
+
+% =========================
+% New commands
+% =========================
+\newcommand{\argmax}[1]{\underset{#1}{\text{argmax }}}
+\newcommand{\argmin}[1]{\underset{#1}{\text{argmin }}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Ex}{\mathbb{E}}
+
+\newtheorem{proposition}{\hskip\parindent\bf{Proposition}}
+\newtheorem{theorem}{\hskip\parindent\bf{Theorem}}
+\newtheorem{lemma}{\hskip\parindent\bf{Lemma}}
+\newtheorem{corollary}{\hskip\parindent\bf{Corollary}}
+\newtheorem{condition}{\hskip\parindent\bf{Condition}}
+\newtheorem{claim}{\hskip\parindent\bf{Claim}}
+\newtheorem{definition}{\hskip\parindent\bf{Definition}}
+\newtheorem{assumption}{\hskip\parindent\bf{Assumption}}
+\newtheorem{example}{\hskip\parindent\bf{Example}}
+
+\begin{document}
+
+\doublespacing
+
+\maketitle
+
+% \begin{abstract}
+% ABSTRACT. \\
+% JEL Codes:. Keywords.
+% \end{abstract}
+
+% \newpage
+\section{Introduction}
+Can a large population of anonymous individuals learn about possibly more efficient ways of interacting? 
+
+\section{Model}
+
+A continuum of unit mass of individuals $i\in[0,1]$ play a game repeatedly. At every period, two individuals are matched, with matches being formed uniformly at random. Let $m_t(i)$ denote player $i$'s match at $t\geq 0$. At every period $t$, the pair of players $(i,\mu_t(i))$ play a simultaneous stage game $G(\theta)$. Every game $G(\theta)$ is symmetric with action set $A$. The payoffs obtained in a stage game vary with the unknown state of the world $\theta\in\Theta$, hence player $i$'s payoff for a given action profile $(a,a')$ is given by $u(a,a',\theta)$. We assume $\Theta$ is finite, $\theta$ is persistent with prior distribution $p\in \Delta(\Theta)$, and that every pair of states is distinct: for every pair of states $\theta,\theta'$ there exists at least one action profile $a$ for which $u(a,\theta)\ne u(a,\theta')$. Players discount time at factor $\delta\in(0,1)$ and the payoffs are normalized by $(1-\delta)$. 
+
+Players observe only the actions played and payoffs received by the players in their matches. To facilitate coordination, we also assume that each match observes the outcome of a public uniform randomization device $x_{i,t}$ at every period. The randomization device is independent over matches, periods, and states. Hence, player $i$'s private history at $t\geq 0$ is given by $
+\tilde{h}^t_i=(x_{i,\tau},a_{i,\tau},a_{m_t(i),\tau},u_{i,\tau},u_{m_t(i),\tau})_{\tau=0}^{t-1}\in [0,1]^t \times A^{2t}\times \R^{2t}$. We denote by $h^t_i=(\tilde{h}^t_i,x_{i,t})$ the concatenation of history $\tilde{h}^t_i$ and the realization of the randomization device at period $t$. Let $\mathcal{H}^t$ be the set of all histories of length $t$ and $\mathcal{H}=\cup_{t=1}^{\infty}\mathcal{H}^t$. A strategy for player $i$ is a function $\sigma_i:\mathcal{H}\to A$, from the set of histories to the set of pure actions. A strategy profile $\sigma=\{\sigma_i\}_{i=\in[0,1]}$ and history $h^t_i$ induces a distribution $\mu_{t}(h^t_i)\in A\times \Theta$ over the on-path actions played by the other players and the state of the world. Let $\rho_t(h^t_i)$ be the marginal of $\mu_t(h^t_i)$ over $\Theta$. A profile $\sigma$ is a weak-Perfect Bayesian Equilibrium if $\mu_t$ is derived from Bayes whenever possible, and for all $t\geq 0$,  $i\in[0,1]$, and $h^t_i$ on-path, \begin{equation*}
+    \sigma_{i}(h^t_i)\in \argmax{a\in A} \int_{A\times \Theta} \left\{(1-\delta)u(a, a',\theta)+\delta V_{t+1}(\rho_{t+1}(h^t_i,a,a'))\right\}\mu_t(h^t_i)[da',d\theta],
+\end{equation*} where \begin{equation*}
+    V_t(\rho_t(h^t_i)) = \int_{A\times \Theta} \left\{(1-\delta)u(a, a',\theta)+\delta V_{t+1}(\rho_{t+1}(h^t_i,a,a'))\right\}\mu_t(h^t_i)[da',d\theta]
+\end{equation*}
+
+\paragraph{Example.} Consider the following coordination example. There are two states indexed by $\theta\in\{\theta_1,\theta_2\}$. Players action sets are $A=\{L,R\}$. The payoffs are given by 
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        $i\,\backslash \, j$  & L & R\\
+        \hline
+        L & $2,2$ & $b,-c$\\
+        \hline
+        R & $-c,b$ & $\theta,\theta$\\
+        \hline
+    \end{tabular}
+\end{table}
+
+Note that only action profile $a=(R,R)$ differentiates the state. We assume that $b-c<4$ and that $\theta_1$, $\theta_2$, and $p=P(\theta=\theta_1)$ satisfy $$\theta_2>b>2>\theta_1,$$ $$p\theta_1+(1-p)\theta_2>2.$$ Under this assumption, the following are true:
+
+\begin{enumerate}[i.]
+    \item When $\theta=\theta_1$, $a_i=L$ is a strictly dominating action. Hence, $(L,L)$ is the unique strict, Pareto Efficient Nash Equilibrium (NE) of the stage game.
+
+    \item When $\theta=\theta_2$, both $(L,L)$ and $(R,R)$ are strict NE, with $(R,R)$ Pareto dominating $(L,L)$.
+
+    \item For all $\delta\in(0,1)$, the third condition implies that it is efficient for everyone to play $(R,R)$ at $t=0$ and coordinate in the efficient equilibrium thereafter. This can be clearly seen by noting that \begin{equation*}
+        p[(1-\delta)\theta_1+2\delta]+(1-p)\theta_2> p\theta_1+(1-p)\theta_2>2.
+    \end{equation*}
+\end{enumerate}
+
+In the efficient outcome of this game, everyone tries the ``risky" action at $t=0$, learn the state, and play the efficient action from then one. Whether this is an outcome that can be supported by an equilibrium depends on the gains from coordination and on what is observable by the players in new matches. For now, we assume that players can only observe their own histories and we consider in what cases the efficient outcome is an equilibrium. 
+
+If $p\theta_1+(1-p)\theta_2>b$, then $(R,R)$ is an stage game Nash Equilibrium of the expected stage game at $t=0$. In this case, the efficient outcome is clearly a NE of the dynamic game. We then assume that $p\theta_1+(1-p)\theta_2<b$. Under this assumption:
+
+\begin{enumerate}[i.]
+    \item Even though both games have strict NE in which players can coordinate on, the expected stage game is a prisoner's dilemma. Hence, when $\delta$ is low, deviating at $t=0$ is profitable even if leads to the deviating player not learning the state.
+
+    \item Even though learning at $t=0$ requires coordination, a player can learn from the actions of informed players with whom they are matched in the future. This might create a free rider problem.
+\end{enumerate}
+
+\begin{lemma}
+    In the game above, if \begin{equation}
+        \label{eq:L-is-better}
+        2p+b(1-p)>-cp+\theta_2(1-p)
+    \end{equation} and \begin{equation}
+        \label{eq:no-full-learning-parameters}
+        \frac{p}{1-p}\geq \frac{2(\theta_2-b)}{(b-\theta_1)},
+    \end{equation} full-learning and coordination can not be supported as an equilibrium outcome for any $\delta<1$. If \eqref{eq:no-full-learning-parameters} is not satisfied, then full-learning and coordination can be supported as an equilibrium outcome for sufficiently large $\delta$.
+
+    \begin{proof}
+        First, note that a deviation from the strategy at any $t\geq 1$ is clearly not profitable. Hence, any profitable deviation strategy must involve a deviation at $t=0$. Consider then a deviation from $a_{i,0}=R$ to $\hat{a}_{i,0}=L$. Since $u_i(\hat{a}_{i,0},R,\theta_1)=u_i(\hat{a}_{i,0},R,\theta_2)$, player $i$ does not learn the state and hence his posterior equals his prior $p$. At $t=1$, in his new match, the other player will play $L$ with probability $p$ and $R$ with probability $1-p$. In any case, player $i$ can learn the state at $t=1$ from the action of his match. Since $$2p+b(1-p)>-cp+\theta_2(1-p),$$ the deviating player's most profitable deviation calls from him to play $\hat{a}_{i,1}=L$ and play informatively from then on. Therefore, the efficient outcome strategy is an equilibrium if and only if \begin{align}
+        \label{eq:all-learn-ic}
+        p[(1-\delta)\theta_1+2\delta]+(1-p)\theta_2 &\geq b(1-\delta)+\delta[2p+(1-p)(b(1-\delta)+\delta \theta_2)]\iff \notag\\
+        \delta (\theta_2-b)(1-p)&\geq b-\theta_1p-\theta_2(1-p), 
+        \end{align} which cannot hold for any $\delta\leq 1$ if \eqref{eq:no-full-learning-parameters} holds.
+
+        On the other hand, if it does not, then clearly the proposed strategy profile is an equilibrium.
+        \end{proof}
+\end{lemma}
+
+For such parameters, the gains from deviating at $t=0$ exceed the costs of playing uninformatively at $t=1$ for all discount factors smaller than unity. Note, however, that it is possible for two dynamic games to have the same expected stage game while only one can support full-learning and coordination. For instance, a game with $p=\frac{1}{2}$, $\theta_1=1$, and $\theta_2=4$ cannot sustain full-learning and coordination, while a game with $p=\frac{1}{2}$, $\theta_1=0$, and $\theta_2=5$ can. Note that in both cases \eqref{eq:L-is-better} is satisfied, while \eqref{eq:no-full-learning-parameters} is satisfied in the first and not in the second. This result invites the question of whether there is an equilibrium in which the whole population eventually learns and coordinates on the efficient action in the first case. Note that a player can only learn the state by either coordinating with their match at $(R,R)$ or by learning it from the action of informed players. In both cases, a positive fraction of players must learn the state at $t=0$ if we hope the whole population to do it. From now on, we keep the assumption that \eqref{eq:no-full-learning-parameters} holds.
+
+\begin{lemma}[No-exploration equilibrium]
+    Suppose \eqref{eq:L-is-better} and \eqref{eq:no-full-learning-parameters} hold. Then, there is no equilibrium in which a positive fraction of players play $(R,R)$ at $t=0$, informed players play informatively thereafter, and uninformed players play $L$ after all histories in which none of their partners have played $R$.
+
+    \begin{proof}
+        Consider a strategy profile $\sigma$ in which a fraction of $1-\frac{\varepsilon}{2}$, $\varepsilon\in(0,1)$, of the matches play $R$ at $t=0$, while the remaining fraction $\frac{\varepsilon}{2}$ plays $L$ at $t=0$. Moreover, assume that $\sigma$ specifies \begin{equation*}
+            \sigma_i(h^t_i)=\begin{cases}
+            L & \text{ if } \quad a_{i,0}=a_{m_0(i),0}=R, \text{ and } u_i=\theta_1\\
+            R & \text{ if } \quad a_{i,0}=a_{m_0(i),0}=R, \text{ and } u_i=\theta_2
+        \end{cases}
+        \end{equation*} for all $t\geq 1$. Note that $\sigma$ is not fully specified, in particular for off-path histories.
+
+        First, we show that the following class os strategy profiles cannot be an equilibrium for any $\varepsilon \in [0,1)$. 
+
+        For a given $\varepsilon \in [0,1)$, consider a strategy profile in which $\varepsilon$ of the players at $t=0$ (or $\frac{\varepsilon}{2}$ of the matches) are assigned to play $(L,L)$ at $t=0$, while the others are assigned to play $(R,R)$. At $t=1$ onward, players who have played $R$ at $t=0$ coordinate on the efficient equilibrium, while players who have played $L$ at $t=0$ play $L$ at all histories in which none of their past partners have played $R$, and $R$ at all histories in which at least one of their partners have played $R$. Note that on the equilibrium path, $a_{-i}=R$ can only be observed if $\theta=\theta_2$. Hence, observing $a_{-i}=R$ signals that your partner learned the state at a prior date, and therefore player $i$ updates his posterior to attach probability $1$ to $\theta=\theta_2$. On the other hand, player $i$ can observe $a_{-i}=L$ by either matching with an uninformed player or by matching with an informed player who learned that the state is $\theta=\theta_1$. After observing $a_{-i,1}=L$, the player attaches probability close to $1$ to the second case when $\varepsilon$ is sufficiently small, in which case playing $L$ is a best response. The posterior probability that player $i$ attaches to state $\theta=\theta_1$ increases over time with more observations of $a_{-i}=L$, and changes to $0$ after any observation of $a_{-i}=R$.
+
+        The equilibrium payoff for a player called to play $a_{i,0}=R$ is \begin{equation*}
+            V_r = p[(1-\delta) \theta_1 + 2\delta] + (1-p)[(1-\delta) \theta_2+\delta V_I(\varepsilon)],
+        \end{equation*} where \begin{align*}
+            V_I(\varepsilon) &= \sum_{\tau=0}^\infty (1-\delta)\delta^\tau[\theta_2-(\theta_2+c)\varepsilon^{2^t}] \\
+            &=(1-\delta)[(1-\varepsilon)\theta_2-c\varepsilon]+\delta V_I(\varepsilon^2).
+        \end{align*} With probability $p$ all players --- informed and uninformed alike --- play $L$ in all periods. At $t=1$, with probability $(1-p)(1-\varepsilon)$, player $i$'s match is informed and plays $R$, while with the complementary probability player $i$'s match in uninformed and plays $L$. Uninformed players that match with informed players at $t$ become informed by observing their matches action. Hence period $t+1$ starts with a fraction $\varepsilon^{2^{t+1}}<\varepsilon^{2^t}$ of uninformed players.
+        
+        Now, consider the payoff of a player that is called to play $a_{i,0}=R$, but plays $\hat{a}_{i,0}=L$ and as an uninformed player from then on. Their payoff from this deviation is given by \begin{equation*}
+            \hat{V}_r=p[(1-\delta)b+2\delta] + (1-p)[(1-\delta)b + \delta V_U(\varepsilon)],
+        \end{equation*} where \begin{align*}
+            V_U(\varepsilon)&=(1-\varepsilon)[(1-\delta)b+\delta V_I(\varepsilon^2)] + \varepsilon[2(1-\delta) + \delta V_U(\varepsilon^2)]\\
+            &=(1-\delta)[(1-\varepsilon)b+2\varepsilon]+\delta[(1-\varepsilon)V_I(\varepsilon^2) + \varepsilon V_U(\varepsilon^2)].
+        \end{align*} At $t=1$ and conditional on $\theta=\theta_2$, the player matches with an informed player with probability $1-\varepsilon$ and becomes informed from then on. With probability $\varepsilon$, they match with an uninformed player and stay uninformed playing $L$.
+
+        Let $D(\varepsilon)=V_U(\varepsilon)-V_I(\varepsilon)$. From the definitions, \begin{equation*}
+            D(\varepsilon)=(1-\delta)[(1-\varepsilon)(b-\theta_2)+\varepsilon(2+c)] + \delta \varepsilon D(\varepsilon^2).
+        \end{equation*} At $\varepsilon=0$, $D(\varepsilon)=(1-\delta)(b-\theta_2)<0$. Now, let $F(\varepsilon)=D(\varepsilon)-D(0)$. We then have \begin{align*}
+            F(\varepsilon) &= (1-\delta)\varepsilon[\theta_2 + 2 + c - b] + \delta \varepsilon D(\varepsilon^2)\\
+            &= \varepsilon K+\delta \varepsilon F(\varepsilon^2) \\
+            &= K\sum_{\tau = 0}^\infty \delta^\tau \varepsilon^{2^{\tau+1}-1}\\
+            &\geq 0,
+        \end{align*} where $K=(1-\delta)[(1-\delta)(\theta_2-b)+2+c]>0$.
+
+        Since $F(\varepsilon)\geq 0$ for all $\varepsilon\in [0,1)$, $D(\varepsilon)\geq D(0)=(1-\delta)[b-\theta_2]$ for all $\varepsilon\in [0,1)$. Hence, \begin{align*}
+            \hat{V}_r-V_r &= (1-\delta)[b-\theta_1p-\theta_2(1-p)] + \delta (1-p)D(\varepsilon)\\
+            &\geq (1-\delta)[b-\theta_1p-\theta_2(1-p) + \delta (1-p)(b-\theta_2)]\\
+            &>0.
+        \end{align*} 
+    \end{proof}
+\end{lemma}
+
+
+
+% \newpage
+% %\nocite{*}
+\bibliography{../references}
+
+% \newpage
+% \appendix
+
+% \section{Appendix}
+
+% %Restating Propositions in the text with the same number
+% \begingroup
+% \renewcommand{\theproposition}{\ref{REFERENCE}}
+% \begin{proposition}[Restated]
+%     PROPOSITION
+
+%     \begin{proof}
+%         PROOF.
+%     \end{proof}
+% \end{proposition}
+% \endgroup
+
+\end{document}
