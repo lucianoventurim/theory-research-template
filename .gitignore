@@ -32,6 +32,3 @@ Thumbs.db
 __pycache__/
 *.pyc
 .venv/
-
-# LaTeX build folders
-**/build/
